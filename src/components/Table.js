@@ -248,7 +248,7 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable(props) {
   const { rowsProp, handleEditButton } = props;
-  const [rows, setRows] = React.useState(rowsProp || defaultRows);
+  const [rows, setRows] = React.useState( rowsProp ||  defaultRows);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -312,6 +312,7 @@ export default function EnhancedTable(props) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  console.log("contenido de la tabla", rows)
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -364,12 +365,15 @@ export default function EnhancedTable(props) {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        foto {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="center">{row.pokedexNumber}</TableCell>
+                      <TableCell align="center">{row.name}</TableCell>
+                      <TableCell align="center">{row.friends}</TableCell>
+                      <TableCell align="left">{row.types.map(type=><li>{type}</li>)}</TableCell>
+                      <TableCell align="center">{row.height}</TableCell>
+                      <TableCell align="center">{row.weight}</TableCell>
+                      <TableCell align="center">{row.description}</TableCell>
                     </TableRow>
                   );
                 })}

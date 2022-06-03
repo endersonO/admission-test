@@ -41,7 +41,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Select() {
+export default function Selector() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
