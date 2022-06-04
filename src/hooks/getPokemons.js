@@ -3,16 +3,16 @@ import axios from "axios";
 
 const useGetPokemons = (API) => {
     const [pokemons, setPokemons] = useState([]);
-    console.log(API)
 
-    console.log("consultar api")
-    useEffect(async() => {
-        const response = await axios(API);
-        console.log("respuesta", response)
-        setPokemons(response.data);
-    }, []);
-    console.log("api consultada")
+    useEffect(() => {
+        async function fetchData() {
+          const response = await axios(API)
+          setPokemons(response.data.results);
+        }
+        fetchData();
+      }, []); 
 
+    console.log("api consultada", pokemons)
     return pokemons;
 }
 
