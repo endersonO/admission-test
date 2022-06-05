@@ -8,7 +8,6 @@ export default function Home(props) {
   const { tableRows } = props;
 
   if (tableRows.length > 90 && countHome === 0) {
-    console.log("llenar table info")
     tableInfo = [...tableRows]
     countHome++
   }
@@ -16,6 +15,7 @@ export default function Home(props) {
   const navigate = useNavigate();
 
   const handleEditButton = (row) => (e) => {
+    console.log("row functon handle edit",row)
     e.stopPropagation();
     const {
       html_image,
@@ -25,6 +25,7 @@ export default function Home(props) {
       html_my_teammates,
       ...params
     } = row;
+    console.log("params", params)
     // ! NAVIGATE NOT ACCEPT HTML PARAMS
     navigate(`form/${row.name}`, {
       state: { ...params },

@@ -11,7 +11,7 @@ import getPokemons from "./hooks/getPokemons"
 import createPokemon from "./hooks/createPokemon.js"
 
 const API = "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0" // agarrar 100 pokemons
-//const API = "https://pokeapi.co/api/v2/pokemon/1/"
+
 let count = 0;
 
 function App() {

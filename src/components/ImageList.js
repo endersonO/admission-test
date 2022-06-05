@@ -4,8 +4,22 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 
 export default function StandardImageList(props) {
-  const [selected, setSelected] = React.useState(defaultValue);
-  setSelected((st) => st + 1);
+  const { sprites } = props;
+  /* const [selected, setSelected] = React.useState([]);
+  setSelected((st) => st + 1); */
+  delete sprites.other;
+  delete sprites.versions;
+
+  console.log("sprites", sprites);
+  console.log("sprites", typeof(sprites));
+  
+  const list = Object.values(sprites).map((data) =>{
+    return {
+      img: data
+    }
+  });
+  console.log("list", list, typeof(list));
+  list.map(value=>console.log(value))
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
@@ -13,8 +27,8 @@ export default function StandardImageList(props) {
           list.map((item) => (
             <ImageListItem key={item.img}>
               <img
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={`${item.img}`}
+                srcSet={`${item.img}`}
                 alt={item.title}
                 loading="lazy"
                 // onClick={handleChange(item.img)}
@@ -23,11 +37,12 @@ export default function StandardImageList(props) {
             </ImageListItem>
           ))}
       </ImageList>
+      <p>imagen</p>
     </div>
   );
 }
 
-const list = [
+/* const list = [
   {
     img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     title: "Breakfast",
@@ -77,3 +92,4 @@ const list = [
     title: "Bike",
   },
 ];
+ */

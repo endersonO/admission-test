@@ -2,7 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-export default function Text() {
+export default function Text(props) {
+  const { label, helper } = props;
   return (
     <Box
       component="form"
@@ -16,10 +17,9 @@ export default function Text() {
         <TextField
           // error
           // id="standard-error-helper-text"
-          label="Error"
-          defaultValue="Hello World"
-          helperText="Incorrect entry."
-          variant="standard"
+          label={label} 
+          variant="outlined"
+          helperText={helper}
           // rows={5}
           // multiline={true}
         />
