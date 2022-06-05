@@ -3,18 +3,20 @@ import "./App.css";
 import Text from "./components/Text";
 import EnhancedTable from "./components/Table";
 import Dialog from "./components/Dialog";
-import React from "react";
+import React, {useContext} from "react";
 import axios from "axios";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import getPokemons from "./hooks/getPokemons"
 import createPokemon from "./hooks/createPokemon.js"
-
-const API = "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0" // agarrar 100 pokemons
+import AppContext from "./context/AppContext.js";
+import rowState from "./hooks/useRowState.js";
 
 let count = 0;
 
 function App() {
+	const rowInitialState = rowState();
+	const { setRowState } = useContext(AppContext);
 	const [tableRows, setTableRows] = React.useState([]);
 	const [pokemonTypesOptions, setPokemonTypesOptions] = React.useState([]);
 	const [controlHome, setControlHome] = React.useState([false]);
@@ -55,6 +57,7 @@ function App() {
 	console.log(controlHome[0])
 
 	return (
+		<AppContext.Provider value={rowInitialState} >
 		<div className="App">
 			<Routes
 				setTableRows={setTableRows}
@@ -66,6 +69,7 @@ function App() {
 			/>
 			<Outlet />
 		</div>
+		</AppContext.Provider>
 	);
 }
 

@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import Text from "../components/Text";
 import Select from "../components/Select";
 import { useNavigate, useLocation } from "react-router-dom";
 import ImageList from "../components/ImageList"
+
+import AppContext from "../context/AppContext.js";
 
 // * use spritesTitles to set the titles to Images
 
@@ -18,6 +20,7 @@ const spriteTitles = {
 };
 
 export default function Form(props) {
+  const { setRowState, row } = useContext(AppContext);
   const location = useLocation();
   // * Use navigate to return root path
   const navigate = useNavigate();
@@ -44,36 +47,13 @@ export default function Form(props) {
   const [pokemonType, setPokemonType] = React.useState([]);
   console.log("pokemon type", pokemonType)
   const pokemonsTeam = tableRows.filter(data => data.types.map(type => pokemonType.includes(type)).reduce((a, b) => a += b, 0)).map(data => data.name) //{
-  //data.map(data => console.log("dentro de filter",data.types))
-  //  console.log(data.types.map(type => pokemonType.includes(type)).reduce((a,b)=>a+=b, 0))
-  //})
+
   const [pokemonTeammates, setPokemonTeammates] = React.useState([]);
   const [pokemonNewName, setPokemonNewName] = React.useState('');
   const [pokemonNewDescription, setPokemonNewDescription] = React.useState([]);
-  /* console.log("posible equipo pokemon", pokemonsTeam)
-  console.log("equipo", pokemonTeammates)
-  console.log("nombre", pokemonNewName)
-  console.log("descripcion", pokemonNewDescription) */
-  /* const oldData = tableRows.filter(data => data.pokedexNumber === pokedexNumber);
-  console.log("old data", oldData)
-  const newData = {
-    ...oldData[0],
-    name: pokemonNewName ? pokemonNewName : oldData[0].name,
-    description: pokemonNewDescription ? pokemonNewDescription : oldData[0].description,
-    friends: pokemonTeammates ? pokemonTeammates : oldData[0].friends,
-  }
-  console.log("new data", newData)
 
-  const newTableRows = tableRows.map(data => {
-    if (data.pokedexNumber === pokedexNumber) {
-      return newData;
-    }
-    return data;
-  })
-  setTableRows(newTableRows) */
-
-  //console.log("new table rows", newTableRows)
-  const HandleEditButton = () => {
+  const HandleEditButton = () => (e) => {
+    console.log("handleEditButton",tableRows)
     const oldData = tableRows.filter(data => data.pokedexNumber === pokedexNumber);
     console.log("old data", oldData)
     const newData = {
@@ -83,24 +63,21 @@ export default function Form(props) {
       friends: pokemonTeammates ? pokemonTeammates : oldData[0].friends,
     }
     console.log("new data", newData)
-
+  
     const newTableRows = tableRows.map(data => {
       if (data.pokedexNumber === pokedexNumber) {
         return newData;
       }
       return data;
     })
-    //setTableRows(newTableRows)
-    /* React.useEffect(() => { */
-			//setTableRows(newTableRows)
-			return navigate(`/`, {
-        state: { ...newTableRows }
-      });
-		/* }); */
+    
+    setRowState(newTableRows)
+		return navigate(`/`);
   }
 
   return (
-    <form >
+    <div > 
+
       <Text label={name} helper={'ingresa el nuevo nombre'} setTextType={setPokemonNewName} />
       <Text label={desciption} helper={'ingresa la nueva descripción'} rows={5} multiline={true} setTextType={setPokemonNewDescription} />
 
@@ -114,7 +91,7 @@ export default function Form(props) {
 
       <ImageList sprites={sprites} />
 
-      <button type='submit' onClick={HandleEditButton} >Submit</button>
-    </form>
+    <button onClick={HandleEditButton()} >Submit</button>
+    </div>
   );
 }
