@@ -312,7 +312,8 @@ export default function EnhancedTable(props) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  console.log("tabla rows",rows)
+  console.log("tabla rows archivo tables",rows)
+  console.log(typeof(rows))
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -339,7 +340,9 @@ export default function EnhancedTable(props) {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
+                  /* console.log("row",row.types)
+                  console.log("row",row.types[0].type.name)
+                  console.log("row",typeof(row.types)) */
                   return (
                     <TableRow
                       hover
@@ -365,11 +368,12 @@ export default function EnhancedTable(props) {
                         scope="row"
                         padding="none"
                       >
-                        foto {row.name}
+                        <img  src={row.image} alt='pokemon' />
+                        {row.name}
                       </TableCell>
                       <TableCell align="center">{row.pokedexNumber}</TableCell>
                       <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="left">{row.types.map(type=><li>{type}</li>)}</TableCell>
+                      <TableCell align="left">{row.types.map(type=><li>type</li>)}</TableCell>
                       <TableCell align="center">{row.friends}</TableCell>
                       <TableCell align="center">{row.height}</TableCell>
                       <TableCell align="center">{row.weight}</TableCell>

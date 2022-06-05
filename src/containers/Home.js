@@ -1,9 +1,17 @@
 import React from "react";
 import EnhancedTable from "../components/Table";
 import { useNavigate } from "react-router-dom";
+let countHome = 0;
+let tableInfo = [];
 
 export default function Home(props) {
   const { tableRows } = props;
+
+  if (tableRows.length > 90 && countHome === 0) {
+    console.log("llenar table info")
+    tableInfo = [...tableRows]
+    countHome++
+  }
 
   const navigate = useNavigate();
 
@@ -23,11 +31,15 @@ export default function Home(props) {
     });
   };
 
+/*   console.log("home", tableRows)
+  console.log("home info", tableInfo)
+  console.log("length home",tableRows.length) */
+
   return (
     <div>
-      {tableRows.length > 0 ? (
+      {tableInfo.length > 0 ? (
         <EnhancedTable
-          rowsProp={tableRows}
+          rowsProp={tableInfo}
           handleEditButton={handleEditButton}
         />
       ) : (

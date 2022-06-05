@@ -12,44 +12,49 @@ import createPokemon from "./hooks/createPokemon.js"
 
 const API = "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0" // agarrar 100 pokemons
 //const API = "https://pokeapi.co/api/v2/pokemon/1/"
+let count = 0;
 
-async function App() {
-  const pokemonsApi = await getPokemons(API)
-  /* .then(
-	data=> {console.log("dentro then",data) 
-	return data
-}
-  ).catch(e=> console.log(e)); */
-  console.log("fuera rhen",pokemonsApi)
-   const pokemons = Object.values(JSON.parse(JSON.stringify(pokemonsApi.results)))
-   console.log("convert pokemons",pokemons)
+function App() {
+	const [tableRows, setTableRows] = React.useState([]);
+	const [pokemonTypesOptions, setPokemonTypesOptions] = React.useState([]);
+	const pokemonsApi = getPokemons()
 
-  const pokemon = Object.values(JSON.parse(JSON.stringify(await createPokemon(pokemons))))
-  console.log("lista de pokemons creados", pokemon)
-  console.log(typeof (pokemon))
-  //const pokemon = [{ name: "char", types: ['water', 'pou'], height: 2, weight: 20, description: "super pokemon"}, {name: "second", types: ['water', 'pou'], height: 6, weight: 40, description: "super segundo"}]
-  
-  console.log("antes de tables")
-  const [tableRows, setTableRows] = React.useState(await pokemon);
-  const [pokemonTypesOptions, setPokemonTypesOptions] = React.useState([]);
-  console.log("tableRows", tableRows)
-/*
-  const handleUpdatePokemonRow = ({ id_pokemon, fields }) => {
-    const { my_name, my_description, my_types, my_teammates, my_sprite } =
-      fields;
-  };
-  console.log("pokemon types options", tableRows) */
+	if (pokemonsApi.length > 99 && count === 0) {
+		console.log("pokemons api",pokemonsApi)
+		const pokemons = pokemonsApi.map((data) => {
+			return {
+				pokedexNumber: data.id,
+				name: data.name,
+				height: data.height,
+				weight: data.weight,
+				types: Object.values(data.types).map(data => data.type.name),
+				friends: [],
+				description: "",
+				image: data.sprites.front_default,
+				sprites: data.sprites,
+			}
+		})
+		setTableRows(pokemons)
+		count++
+	}
+	const handleUpdatePokemonRow = ({ id_pokemon, fields }) => {
+		const { my_name, my_description, my_types, my_teammates, my_sprite } = fields;
+	};
+	//console.log("pokemon types options", tableRows) 
 
-  /* return (
-    <div className="App">
-      <Routes
-        tableRows={tableRows}
-        pokemonTypesOptions={pokemonTypesOptions}
-        handleUpdatePokemonRow={handleUpdatePokemonRow}
-      />
-      <Outlet />
-    </div>
-  ); */
+	//setTableRows(pokemonsApi)
+	/* console.log("table rows app",tableRows)
+	console.log("app lenth",tableRows.length) */
+	return (
+		<div className="App">
+			<Routes
+				tableRows={tableRows}
+				pokemonTypesOptions={pokemonTypesOptions}
+				handleUpdatePokemonRow={handleUpdatePokemonRow}
+			/>
+			<Outlet />
+		</div>
+	);
 }
 
 export default App;
