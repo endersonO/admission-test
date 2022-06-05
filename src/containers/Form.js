@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import Text from "../components/Text";
 import Select from "../components/Select";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -43,9 +43,9 @@ export default function Form(props) {
   };
 
   const [pokemonType, setPokemonType] = React.useState([]);
-  
+
   const pokemonsTeam = row.rowInformation[0].filter(data => data.types.map(type => pokemonType.includes(type)).reduce((a, b) => a += b, 0)).map(data => data.name) //{
-    //console.log("pokemon type", pokemonsTeam)
+  //console.log("pokemon type", pokemonsTeam)
 
   const [pokemonTeammates, setPokemonTeammates] = React.useState([]);
   const [pokemonNewName, setPokemonNewName] = React.useState('');
@@ -61,22 +61,23 @@ export default function Form(props) {
       name: pokemonNewName ? pokemonNewName : oldData[0].name,
       description: pokemonNewDescription ? pokemonNewDescription : oldData[0].description,
       friends: pokemonTeammates ? pokemonTeammates : oldData[0].friends,
+      image: imgPokemon ? imgPokemon : oldData[0].image,
     }
     //console.log("new data", newData)
-  
+
     const newTableRows = row.rowInformation[0].map(data => {
       if (data.pokedexNumber === pokedexNumber) {
         return newData;
       }
       return data;
     })
-    
+
     setRowState(newTableRows)
-		return navigate(`/`);
+    return navigate(`/`);
   }
 
   return (
-    <div > 
+    <div >
 
       <Text label={name} helper={'ingresa el nuevo nombre'} setTextType={setPokemonNewName} />
       <Text label={desciption} helper={'ingresa la nueva descripción'} rows={5} multiline={true} setTextType={setPokemonNewDescription} />
@@ -90,8 +91,15 @@ export default function Form(props) {
         />}
 
       <ImageList sprites={sprites} setImgPokemon={setImgPokemon} />
-
-    <button onClick={HandleEditButton()} >Submit</button>
+      {imgPokemon != '' ? <div><p>Nueva imagen seleccionada</p>
+        <img
+          src={`${imgPokemon}`}
+          srcSet={`${imgPokemon}`}
+          alt={imgPokemon}
+          loading="lazy"
+        />
+      </div> : ''}
+      <button onClick={HandleEditButton()} >Submit</button>
     </div>
   );
 }

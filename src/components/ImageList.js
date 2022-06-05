@@ -4,6 +4,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 
 export default function StandardImageList(props) {
+  const [control, setControl] = React.useState(false);
   const { sprites, setImgPokemon } = props;
   /* const [selected, setSelected] = React.useState([]);
   setSelected((st) => st + 1); */
@@ -19,8 +20,9 @@ export default function StandardImageList(props) {
     }
   });
 
-  const handleChange = (event) => {
-    console.log("event", event);
+  const handleChange = (value) => {
+    setImgPokemon(value);
+    setControl(!control);
   }
 
   return (
@@ -28,7 +30,7 @@ export default function StandardImageList(props) {
       <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
         {list &&
           list.map((item) => (
-            <button onClick={() => handleChange(item.img)}>
+            <button onClick={()=>handleChange(item.img)} >
               <ImageListItem key={item.img}>
 
                 <img
@@ -37,7 +39,6 @@ export default function StandardImageList(props) {
                   alt={item.title}
                   loading="lazy"
                 />
-
                 <ImageListItemBar title={item.title} subtitle={item.author} />
               </ImageListItem>
             </button>
