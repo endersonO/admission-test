@@ -256,8 +256,6 @@ export default function EnhancedTable(props) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  console.log("rows denro de table", rows);
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -272,8 +270,6 @@ export default function EnhancedTable(props) {
     }
     setSelected([]);
   };
-
-  React.useEffect(() => {}, [JSON.stringify(rowsProp)]);
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
@@ -314,8 +310,8 @@ export default function EnhancedTable(props) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  console.log("tabla rows archivo tables",rows)
-  console.log(typeof(rows))
+  //console.log("tabla rows archivo tables",rows)
+  //console.log(typeof(rows))
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -342,9 +338,6 @@ export default function EnhancedTable(props) {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
-                  /* console.log("row",row.types)
-                  console.log("row",row.types[0].type.name)
-                  console.log("row",typeof(row.types)) */
                   return (
                     <TableRow
                       hover
@@ -375,8 +368,8 @@ export default function EnhancedTable(props) {
                       </TableCell>
                       <TableCell align="center">{row.pokedexNumber}</TableCell>
                       <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="left">{row.types.map(type=><li>type</li>)}</TableCell>
-                      <TableCell align="center">{row.friends}</TableCell>
+                      <TableCell align="left">{row.types.map(type=><li>{type}</li>)}</TableCell>
+                      <TableCell align="center">{row.friends.map(friend=><li>{friend}</li>)}</TableCell>
                       <TableCell align="center">{row.height}</TableCell>
                       <TableCell align="center">{row.weight}</TableCell>
                       <TableCell align="center">{row.description}</TableCell>

@@ -50,7 +50,7 @@ export default function Selector(props) {
     const {
       target: { value },
     } = event;
-    console.log("value", value);
+    //console.log("value", value);
     setPersonName(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value

@@ -16,7 +16,6 @@ let count = 0;
 
 function App() {
 	const rowInitialState = rowState();
-	const { setRowState } = useContext(AppContext);
 	const [tableRows, setTableRows] = React.useState([]);
 	const [pokemonTypesOptions, setPokemonTypesOptions] = React.useState([]);
 	const [controlHome, setControlHome] = React.useState([false]);
@@ -24,7 +23,7 @@ function App() {
 	const navigate = new useNavigate();
 
 	if (pokemonsApi.length > 99 && count === 0) {
-		console.log("pokemons api", pokemonsApi)
+		//console.log("pokemons api", pokemonsApi)
 		const pokemons = pokemonsApi.map((data) => {
 			return {
 				pokedexNumber: data.id,
@@ -44,17 +43,17 @@ function App() {
 
 	const HandleUpdatePokemonRow = (data) => {
 		/* const { my_name, my_description, my_types, my_teammates, my_sprite } = fields; */
-		console.log("App handle update", data)
+		//console.log("App handle update", data)
 
-		console.log("App update", tableRows)
+		//console.log("App update", tableRows)
 		React.useEffect(() => {
 			setTableRows(data)
 			return navigate(`/`);
 		});
 		
 	};
-	console.log("pokemon types options", tableRows)
-	console.log(controlHome[0])
+	//console.log("pokemon types options", tableRows)
+	//console.log(controlHome[0])
 
 	return (
 		<AppContext.Provider value={rowInitialState} >

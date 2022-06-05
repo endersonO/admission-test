@@ -4,14 +4,14 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 
 export default function StandardImageList(props) {
-  const { sprites } = props;
+  const { sprites, setImgPokemon } = props;
   /* const [selected, setSelected] = React.useState([]);
   setSelected((st) => st + 1); */
   delete sprites.other;
   delete sprites.versions;
 
-  console.log("sprites", sprites);
-  console.log("sprites", typeof (sprites));
+  //console.log("sprites", sprites);
+  //console.log("sprites", typeof (sprites));
 
   const list = Object.values(sprites).filter(data => data !== null).map(data => {
     return {

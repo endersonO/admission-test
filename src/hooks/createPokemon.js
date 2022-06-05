@@ -11,7 +11,7 @@ const createPokemon = (pokemon) => {
         //console.log("data characteris url",typeof(data.url))
         //console.log("data response", getPokemoninfo(data.url))
         const characteristic = getPokemoninfo(data.url)
-        console.log("characteristic in create pokemon", characteristic)
+        //console.log("characteristic in create pokemon", characteristic)
         
         return {
             name: data.name, 
@@ -22,7 +22,7 @@ const createPokemon = (pokemon) => {
             description: "" 
         }})
     
-    console.log("create pokemon", result)
+    //console.log("create pokemon", result)
     return result
 }
 
