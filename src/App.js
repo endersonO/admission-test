@@ -5,7 +5,7 @@ import EnhancedTable from "./components/Table";
 import Dialog from "./components/Dialog";
 import React from "react";
 import axios from "axios";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import getPokemons from "./hooks/getPokemons"
 import createPokemon from "./hooks/createPokemon.js"
@@ -17,10 +17,12 @@ let count = 0;
 function App() {
 	const [tableRows, setTableRows] = React.useState([]);
 	const [pokemonTypesOptions, setPokemonTypesOptions] = React.useState([]);
+	const [controlHome, setControlHome] = React.useState([false]);
 	const pokemonsApi = getPokemons()
+	const navigate = new useNavigate();
 
 	if (pokemonsApi.length > 99 && count === 0) {
-		console.log("pokemons api",pokemonsApi)
+		console.log("pokemons api", pokemonsApi)
 		const pokemons = pokemonsApi.map((data) => {
 			return {
 				pokedexNumber: data.id,
@@ -34,23 +36,33 @@ function App() {
 				sprites: data.sprites,
 			}
 		})
-		setTableRows(pokemons)
+		setTableRows([...pokemons])
 		count++
 	}
-	const handleUpdatePokemonRow = ({ id_pokemon, fields }) => {
-		const { my_name, my_description, my_types, my_teammates, my_sprite } = fields;
-	};
-	//console.log("pokemon types options", tableRows) 
 
-	//setTableRows(pokemonsApi)
-	/* console.log("table rows app",tableRows)
-	console.log("app lenth",tableRows.length) */
+	const HandleUpdatePokemonRow = (data) => {
+		/* const { my_name, my_description, my_types, my_teammates, my_sprite } = fields; */
+		console.log("App handle update", data)
+
+		console.log("App update", tableRows)
+		React.useEffect(() => {
+			setTableRows(data)
+			return navigate(`/`);
+		});
+		
+	};
+	console.log("pokemon types options", tableRows)
+	console.log(controlHome[0])
+
 	return (
 		<div className="App">
 			<Routes
+				setTableRows={setTableRows}
 				tableRows={tableRows}
 				pokemonTypesOptions={pokemonTypesOptions}
-				handleUpdatePokemonRow={handleUpdatePokemonRow}
+				handleUpdatePokemonRow={HandleUpdatePokemonRow}
+				controlHome={controlHome}
+				setControlHome={setControlHome}
 			/>
 			<Outlet />
 		</div>

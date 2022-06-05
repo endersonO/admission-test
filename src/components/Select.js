@@ -41,7 +41,8 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Selector() {
+export default function Selector(props) {
+  const { options, setInfoType } = props
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
@@ -49,10 +50,12 @@ export default function Selector() {
     const {
       target: { value },
     } = event;
+    console.log("value", value);
     setPersonName(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setInfoType(typeof value === "string" ? value.split(",") : value)
   };
 
   return (
@@ -75,7 +78,7 @@ export default function Selector() {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {options.map((name) => (
             <MenuItem
               key={name}
               value={name}

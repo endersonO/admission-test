@@ -5,7 +5,7 @@ let countHome = 0;
 let tableInfo = [];
 
 export default function Home(props) {
-  const { tableRows } = props;
+  const { tableRows, controlHome, setControlHome } = props;
 
   if (tableRows.length > 90 && countHome === 0) {
     tableInfo = [...tableRows]

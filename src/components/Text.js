@@ -3,7 +3,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 export default function Text(props) {
-  const { label, helper } = props;
+  const { label, helper, rows, multiline, setTextType } = props;
+  const handleChange = (event) => {
+    setTextType(event.target.value);
+  };
   return (
     <Box
       component="form"
@@ -20,8 +23,9 @@ export default function Text(props) {
           label={label} 
           variant="outlined"
           helperText={helper}
-          // rows={5}
-          // multiline={true}
+          rows={rows}
+          multiline={multiline}
+          onChange={handleChange}
         />
       </div>
     </Box>

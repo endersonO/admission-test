@@ -11,33 +11,38 @@ export default function StandardImageList(props) {
   delete sprites.versions;
 
   console.log("sprites", sprites);
-  console.log("sprites", typeof(sprites));
-  
-  const list = Object.values(sprites).map((data) =>{
+  console.log("sprites", typeof (sprites));
+
+  const list = Object.values(sprites).filter(data => data !== null).map(data => {
     return {
       img: data
     }
   });
-  console.log("list", list, typeof(list));
-  list.map(value=>console.log(value))
+
+  const handleChange = (event) => {
+    console.log("event", event);
+  }
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
         {list &&
           list.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                src={`${item.img}`}
-                srcSet={`${item.img}`}
-                alt={item.title}
-                loading="lazy"
-                // onClick={handleChange(item.img)}
-              />
-              <ImageListItemBar title={item.title} subtitle={item.author} />
-            </ImageListItem>
+            <button onClick={() => handleChange(item.img)}>
+              <ImageListItem key={item.img}>
+
+                <img
+                  src={`${item.img}`}
+                  srcSet={`${item.img}`}
+                  alt={item.title}
+                  loading="lazy"
+                />
+
+                <ImageListItemBar title={item.title} subtitle={item.author} />
+              </ImageListItem>
+            </button>
           ))}
       </ImageList>
-      <p>imagen</p>
     </div>
   );
 }
